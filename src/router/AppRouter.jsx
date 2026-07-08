@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Home from '../pages/Home';
+import ProductDetails from '../pages/ProductDetails';
 import NotFound from '../pages/NotFound';
 
 function Layout({ children }) {
@@ -25,6 +26,14 @@ export default function AppRouter() {
         element={
           <Layout>
             <Home />
+          </Layout>
+        } 
+      />
+      <Route 
+        path="/product/:id" 
+        element={
+          <Layout>
+            <ProductDetails />
           </Layout>
         } 
       />
