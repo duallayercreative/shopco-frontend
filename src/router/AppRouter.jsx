@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Home from '../pages/Home';
 import ProductDetails from '../pages/ProductDetails';
+import Cart from '../pages/Cart';
 import NotFound from '../pages/NotFound';
 
 function Layout({ children }) {
@@ -34,6 +35,14 @@ export default function AppRouter() {
         element={
           <Layout>
             <ProductDetails />
+          </Layout>
+        } 
+      />
+      <Route 
+        path="/cart" 
+        element={
+          <Layout>
+            <Cart />
           </Layout>
         } 
       />

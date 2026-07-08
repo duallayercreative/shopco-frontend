@@ -2,12 +2,31 @@ import React, { useState } from 'react';
 import { Star, StarHalf, ChevronRight, Check, Minus, Plus, Settings2, ChevronDown } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import ReviewCard from '../components/ReviewCard';
+import { useShop } from '../context/ShopContext';
 
 export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState('olive');
   const [selectedSize, setSelectedSize] = useState('Large');
   const [activeTab, setActiveTab] = useState('reviews');
+  const [addedMessage, setAddedMessage] = useState('');
+  const { addToCart } = useShop();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: 1, // hardcoded for this demo
+      name: 'ONE LIFE GRAPHIC T-SHIRT',
+      price: 260,
+      image: '/product_tshirt_black.png',
+      color: selectedColor,
+      size: selectedSize,
+      quantity: quantity
+    });
+    
+    // Show temporary success message
+    setAddedMessage('Added to cart!');
+    setTimeout(() => setAddedMessage(''), 2000);
+  };
 
   return (
     <div className="bg-white dark:bg-zinc-950 min-h-screen pt-4 pb-24 text-black dark:text-white transition-colors">
@@ -123,8 +142,11 @@ export default function ProductDetails() {
                   <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
-              <button className="flex-grow bg-black text-white dark:bg-white dark:text-black rounded-full py-3 sm:py-4 font-semibold text-sm sm:text-base hover:bg-zinc-800 dark:hover:bg-gray-200 transition-colors">
-                Add to Cart
+              <button 
+                onClick={handleAddToCart}
+                className="flex-grow bg-black text-white dark:bg-white dark:text-black rounded-full py-3 sm:py-4 font-semibold text-sm sm:text-base hover:bg-zinc-800 dark:hover:bg-gray-200 transition-colors relative"
+              >
+                {addedMessage || 'Add to Cart'}
               </button>
             </div>
           </div>

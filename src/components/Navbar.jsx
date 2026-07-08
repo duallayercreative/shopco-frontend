@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { 
   Search, 
   ShoppingCart, 
@@ -8,11 +8,23 @@ import {
   X, 
   ChevronDown 
 } from 'lucide-react';
+import { useShop } from '../context/ShopContext';
 
 export default function Navbar() {
   const [showPromo, setShowPromo] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shopDropdownOpen, setShopDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const { getCartCount } = useShop();
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+      setMobileMenuOpen(false);
+    }
+  };
 
   return (
     <header className="w-full z-50 sticky top-0 bg-white dark:bg-zinc-950 transition-colors duration-300">
@@ -92,16 +104,18 @@ export default function Navbar() {
 
             {/* Middle Search Input */}
             <div className="hidden md:flex flex-1 max-w-xl">
-              <div className="relative w-full">
+              <form onSubmit={handleSearch} className="relative w-full">
                 <span className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-gray-400">
                   <Search className="h-5 w-5" />
                 </span>
                 <input
                   type="text"
                   placeholder="Search for products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-zinc-100 dark:bg-zinc-900 border-none rounded-full text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white transition-all text-black dark:text-white"
                 />
-              </div>
+              </form>
             </div>
 
             {/* Right: Icons */}
@@ -114,9 +128,11 @@ export default function Navbar() {
               {/* Cart */}
               <Link to="/cart" className="relative p-1 text-black dark:text-white hover:opacity-75 transition-opacity" aria-label="Cart">
                 <ShoppingCart className="h-6 w-6" />
-                <span className="absolute top-0 right-0 bg-black text-white dark:bg-white dark:text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold scale-90 translate-x-1 -translate-y-1">
-                  2
-                </span>
+                {getCartCount() > 0 && (
+                  <span className="absolute top-0 right-0 bg-black text-white dark:bg-white dark:text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold scale-90 translate-x-1 -translate-y-1">
+                    {getCartCount()}
+                  </span>
+                )}
               </Link>
               
               {/* User Account */}

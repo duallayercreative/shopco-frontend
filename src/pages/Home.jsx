@@ -103,7 +103,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch min-h-[500px] lg:min-h-[660px]">
             {/* Left Column: Text & Stats */}
             <div className="flex flex-col justify-center py-12 md:py-16 text-left space-y-6 sm:space-y-8 z-10">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none text-black uppercase">
+              <h1 className="text-[36px] leading-[34px] sm:text-5xl md:text-6xl lg:text-[64px] lg:leading-[64px] font-black tracking-tighter text-black uppercase">
                 FIND CLOTHES<br />THAT MATCHES<br />YOUR STYLE
               </h1>
               <p className="text-black/60 text-sm sm:text-base max-w-lg leading-relaxed">
@@ -119,18 +119,20 @@ export default function Home() {
               </div>
 
               {/* Stat Blocks */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 pt-4 max-w-xl">
-                <div className="text-left">
-                  <span className="block text-2xl sm:text-4xl font-bold text-black">200+</span>
-                  <span className="text-[10px] sm:text-sm text-black/60 block">International Brands</span>
+              <div className="flex items-center justify-between sm:justify-start sm:gap-8 pt-4 w-full max-w-md">
+                <div className="flex flex-col text-left">
+                  <span className="text-2xl sm:text-4xl font-bold text-black">200+</span>
+                  <span className="text-[10px] sm:text-sm text-black/60">International Brands</span>
                 </div>
-                <div className="text-left border-l border-black/10 pl-4 sm:pl-8">
-                  <span className="block text-2xl sm:text-4xl font-bold text-black">2,000+</span>
-                  <span className="text-[10px] sm:text-sm text-black/60 block">High-Quality Products</span>
+                <div className="w-px h-12 bg-black/10 hidden sm:block"></div>
+                <div className="flex flex-col text-left border-l border-black/10 pl-4 sm:border-none sm:pl-0">
+                  <span className="text-2xl sm:text-4xl font-bold text-black">2,000+</span>
+                  <span className="text-[10px] sm:text-sm text-black/60">High-Quality Products</span>
                 </div>
-                <div className="text-left border-l border-black/10 pl-4 sm:pl-8">
-                  <span className="block text-2xl sm:text-4xl font-bold text-black">30,000+</span>
-                  <span className="text-[10px] sm:text-sm text-black/60 block">Happy Customers</span>
+                <div className="w-px h-12 bg-black/10 hidden sm:block"></div>
+                <div className="flex flex-col text-left border-l border-black/10 pl-4 sm:border-none sm:pl-0">
+                  <span className="text-2xl sm:text-4xl font-bold text-black">30,000+</span>
+                  <span className="text-[10px] sm:text-sm text-black/60">Happy Customers</span>
                 </div>
               </div>
             </div>
