@@ -2,7 +2,7 @@ import React from 'react';
 import { Star, StarHalf } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function ProductCard({ image, title, rating, price, originalPrice, discount }) {
+export default function ProductCard({ id, image, title, rating, price, originalPrice, discount }) {
   // Generate stars based on rating
   const renderStars = () => {
     const stars = [];
@@ -21,7 +21,7 @@ export default function ProductCard({ image, title, rating, price, originalPrice
   };
 
   return (
-    <Link to="/product/1" className="flex flex-col gap-2 sm:gap-4 group cursor-pointer">
+    <Link to={`/product/${id || 1}`} className="flex flex-col gap-2 sm:gap-4 group cursor-pointer">
       {/* Image Container */}
       <div className="relative aspect-square bg-[#f0eeed] rounded-2xl overflow-hidden mb-2">
         <img 

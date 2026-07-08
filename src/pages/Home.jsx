@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import ReviewCard from '../components/ReviewCard';
 
@@ -167,7 +168,7 @@ export default function Home() {
       </section>
 
       {/* Brands Bar */}
-      <section className="bg-black py-8 overflow-hidden">
+      <section id="brands" className="bg-black py-8 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center sm:justify-between items-center gap-8 sm:gap-4">
             {BRANDS.map((brand) => (
@@ -188,6 +189,7 @@ export default function Home() {
           {NEW_ARRIVALS.map((product) => (
             <ProductCard 
               key={product.id}
+              id={product.id}
               image={product.image}
               title={product.name}
               rating={product.rating}
@@ -200,14 +202,14 @@ export default function Home() {
         
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="border border-gray-200 dark:border-zinc-800 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-semibold px-12 py-3 rounded-full text-sm transition-all duration-300">
+          <Link to="/shop" className="inline-block border border-gray-200 dark:border-zinc-800 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-semibold px-12 py-3 rounded-full text-sm transition-all duration-300">
             View All
-          </button>
+          </Link>
         </div>
       </section>
 
       {/* Top Selling Section */}
-      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="top-selling" className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-center tracking-tight mb-12 uppercase">
           Top Selling
         </h2>
@@ -215,6 +217,7 @@ export default function Home() {
           {TOP_SELLING.map((product) => (
             <ProductCard 
               key={product.id}
+              id={product.id}
               image={product.image}
               title={product.name}
               rating={product.rating}
@@ -227,9 +230,9 @@ export default function Home() {
         
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="border border-gray-200 dark:border-zinc-800 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-semibold px-12 py-3 rounded-full text-sm transition-all duration-300">
+          <Link to="/shop" className="inline-block border border-gray-200 dark:border-zinc-800 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-semibold px-12 py-3 rounded-full text-sm transition-all duration-300">
             View All
-          </button>
+          </Link>
         </div>
       </section>
 

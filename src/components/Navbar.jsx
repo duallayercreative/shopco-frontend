@@ -91,13 +91,13 @@ export default function Navbar() {
                 )}
               </div>
 
-              <a href="#new-arrivals" className="text-black dark:text-white hover:opacity-70 transition-opacity">
+              <a href="/#top-selling" className="text-black dark:text-white hover:opacity-70 transition-opacity">
                 On Sale
               </a>
-              <a href="#new-arrivals" className="text-black dark:text-white hover:opacity-70 transition-opacity">
+              <a href="/#new-arrivals" className="text-black dark:text-white hover:opacity-70 transition-opacity">
                 New Arrivals
               </a>
-              <a href="#brands" className="text-black dark:text-white hover:opacity-70 transition-opacity">
+              <a href="/#brands" className="text-black dark:text-white hover:opacity-70 transition-opacity">
                 Brands
               </a>
             </div>
@@ -187,13 +187,13 @@ export default function Navbar() {
                 </div>
               )}
 
-              <a href="#new-arrivals" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
+              <a href="/#top-selling" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
                 On Sale
               </a>
-              <a href="#new-arrivals" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
+              <a href="/#new-arrivals" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
                 New Arrivals
               </a>
-              <a href="#brands" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
+              <a href="/#brands" onClick={() => setMobileMenuOpen(false)} className="text-black dark:text-white">
                 Brands
               </a>
             </div>

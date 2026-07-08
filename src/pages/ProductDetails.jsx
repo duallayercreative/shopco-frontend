@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import { Star, StarHalf, ChevronRight, Check, Minus, Plus, Settings2, ChevronDown } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import ReviewCard from '../components/ReviewCard';
 import { useShop } from '../context/ShopContext';
+import { PRODUCTS } from '../data/products';
 
 export default function ProductDetails() {
+  const { id } = useParams();
+  const product = PRODUCTS.find((p) => p.id === parseInt(id || '1')) || PRODUCTS[0];
+
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState('olive');
-  const [selectedSize, setSelectedSize] = useState('Large');
+  const [selectedColor, setSelectedColor] = useState(product.colors[0] || 'black');
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0] || 'Large');
   const [activeTab, setActiveTab] = useState('reviews');
   const [addedMessage, setAddedMessage] = useState('');
   const { addToCart } = useShop();
 
   const handleAddToCart = () => {
     addToCart({
-      id: 1, // hardcoded for this demo
-      name: 'ONE LIFE GRAPHIC T-SHIRT',
-      price: 260,
-      image: '/product_tshirt_black.png',
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
       color: selectedColor,
       size: selectedSize,
       quantity: quantity
@@ -28,19 +33,33 @@ export default function ProductDetails() {
     setTimeout(() => setAddedMessage(''), 2000);
   };
 
+  // Helper color map
+  const colorMap = {
+    green: '#00C12B',
+    red: '#F50606',
+    yellow: '#F5DD06',
+    orange: '#F57906',
+    lightBlue: '#06CAF5',
+    blue: '#063AF5',
+    purple: '#7D06F5',
+    pink: '#F506A4',
+    white: '#FFFFFF',
+    black: '#000000',
+    olive: '#4F4631',
+    navy: '#31344F'
+  };
+
   return (
     <div className="bg-white dark:bg-zinc-950 min-h-screen pt-4 pb-24 text-black dark:text-white transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8 overflow-x-auto whitespace-nowrap">
-          <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Home</a>
+          <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-4 h-4" />
-          <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Shop</a>
+          <Link to="/shop" className="hover:text-black dark:hover:text-white transition-colors">Shop</Link>
           <ChevronRight className="w-4 h-4" />
-          <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Men</a>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-black dark:text-white font-medium">T-shirts</span>
+          <span className="text-black dark:text-white font-medium capitalize">{product.category}</span>
         </nav>
 
         {/* Product Layout (Desktop: Gallery Left, Info Right) */}
@@ -55,57 +74,57 @@ export default function ProductDetails() {
                   key={idx} 
                   className={`relative aspect-square w-1/3 lg:w-full rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${idx === 0 ? 'border-black dark:border-white' : 'border-transparent hover:border-black/20'}`}
                 >
-                  <img src="/product_tshirt_black.png" alt="Thumbnail" className="w-full h-full object-cover bg-[#f0eeed] dark:bg-zinc-900" />
+                  <img src={product.image} alt="Thumbnail" className="w-full h-full object-cover bg-[#f0eeed] dark:bg-zinc-900" />
                 </div>
               ))}
             </div>
             
             {/* Main Image */}
             <div className="relative w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden bg-[#f0eeed] dark:bg-zinc-900 flex-grow">
-              <img src="/product_tshirt_black.png" alt="Main Product" className="w-full h-full object-cover object-top" />
+              <img src={product.image} alt={product.name} className="w-full h-full object-cover object-top" />
             </div>
           </div>
 
           {/* Info Section */}
           <div className="w-full lg:w-1/2 flex flex-col pt-2 lg:pt-6">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2 sm:mb-4">ONE LIFE GRAPHIC T-SHIRT</h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2 sm:mb-4">{product.name}</h1>
             
             <div className="flex items-center gap-4 mb-4 sm:mb-6">
               <div className="flex gap-1">
                 {[1,2,3,4].map((i) => <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 fill-[#FFC633] text-[#FFC633]" />)}
                 <StarHalf className="w-5 h-5 sm:w-6 sm:h-6 fill-[#FFC633] text-[#FFC633]" />
               </div>
-              <span className="text-sm sm:text-base text-black/60 dark:text-white/60">4.5/<span className="text-black/40 dark:text-white/40">5</span></span>
+              <span className="text-sm sm:text-base text-black/60 dark:text-white/60">{product.rating}/<span className="text-black/40 dark:text-white/40">5</span></span>
             </div>
 
             <div className="flex items-center gap-3 sm:gap-4 mb-6">
-              <span className="text-3xl sm:text-4xl font-bold">$260</span>
-              <span className="text-3xl sm:text-4xl font-bold text-black/30 dark:text-white/30 line-through">$300</span>
-              <span className="text-sm sm:text-base font-medium text-[#FF3333] bg-[#FF3333]/10 px-3 py-1.5 rounded-full">
-                -40%
-              </span>
+              <span className="text-3xl sm:text-4xl font-bold">${product.price}</span>
+              {product.originalPrice && (
+                <>
+                  <span className="text-3xl sm:text-4xl font-bold text-black/30 dark:text-white/30 line-through">${product.originalPrice}</span>
+                  <span className="text-sm sm:text-base font-medium text-[#FF3333] bg-[#FF3333]/10 px-3 py-1.5 rounded-full">
+                    -{product.discount}%
+                  </span>
+                </>
+              )}
             </div>
 
             <p className="text-black/60 dark:text-white/60 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-200 dark:border-zinc-800">
-              This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.
+              {product.description}
             </p>
 
             {/* Colors */}
             <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-200 dark:border-zinc-800">
               <span className="block text-black/60 dark:text-white/60 text-sm sm:text-base mb-3 sm:mb-4">Select Colors</span>
               <div className="flex gap-4">
-                {[
-                  { id: 'olive', color: '#4F4631' },
-                  { id: 'green', color: '#314F4A' },
-                  { id: 'navy', color: '#31344F' }
-                ].map((c) => (
+                {product.colors.map((c) => (
                   <button 
-                    key={c.id}
-                    onClick={() => setSelectedColor(c.id)}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                    style={{ backgroundColor: c.color }}
+                    key={c}
+                    onClick={() => setSelectedColor(c)}
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110 border ${c === 'white' ? 'border-gray-200 dark:border-gray-600' : 'border-transparent'}`}
+                    style={{ backgroundColor: colorMap[c] || c }}
                   >
-                    {selectedColor === c.id && <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
+                    {selectedColor === c && <Check className={`w-4 h-4 sm:w-5 sm:h-5 ${c === 'white' ? 'text-black' : 'text-white'}`} />}
                   </button>
                 ))}
               </div>
@@ -115,7 +134,7 @@ export default function ProductDetails() {
             <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-200 dark:border-zinc-800">
               <span className="block text-black/60 dark:text-white/60 text-sm sm:text-base mb-3 sm:mb-4">Choose Size</span>
               <div className="flex flex-wrap gap-3 sm:gap-4">
-                {['Small', 'Medium', 'Large', 'X-Large'].map((size) => (
+                {product.sizes.map((size) => (
                   <button 
                     key={size}
                     onClick={() => setSelectedSize(size)}
